@@ -106,6 +106,20 @@ VibeMate/
 
 Mood Support is a friendly AI companion, not a medical or therapy tool. If you or someone you know is in serious distress, please contact a trusted person or call the free Tele-MANAS helpline in India at **14416** (24x7).
 
+## Project Screenshots
+
+### Home Page
+![Home Page](docs/screenshots/home-page.png)
+
+### Smart Chat
+![Smart Chat](docs/screenshots/smart-chat.png)
+
+### Study Buddy
+![Study Buddy](docs/screenshots/study-buddy.png)
+
+### Coding Assistant
+![Coding Assistant](docs/screenshots/coding-assistant.png)
+
 ## Author
 
 Tanaaz Fathima – B.E. Information Science & Engineering, AMC Engineering College
