@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VibeMate 2.0 - Your AI Companion</title>
+
+    <!-- Google Font and Font Awesome icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Our own CSS file (we write it in Step 7) -->
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+
+    <!-- Soft glowing background shapes -->
+    <div class="bg-shape shape-1"></div>
+    <div class="bg-shape shape-2"></div>
+    <div class="bg-shape shape-3"></div>
+
+    <div class="app">
+
+        <!-- ================= SIDEBAR ================= -->
+        <aside class="sidebar" id="sidebar">
+            <div class="logo">
+                <div class="logo-icon"><i class="fa-solid fa-heart"></i></div>
+                <div>
+                    <h1>VibeMate</h1>
+                    <p>Your AI companion</p>
+                </div>
+            </div>
+
+            <button class="new-chat-btn" id="newChatBtn">
+                <i class="fa-solid fa-plus"></i> New Chat
+            </button>
+
+            <p class="sidebar-label">Modes</p>
+            <nav class="mode-list">
+                <button class="mode-btn active" data-mode="chat">
+                    <i class="fa-solid fa-comments"></i> Smart Chat
+                </button>
+                <button class="mode-btn" data-mode="study">
+                    <i class="fa-solid fa-book-open"></i> Study Buddy
+                </button>
+                <button class="mode-btn" data-mode="coding">
+                    <i class="fa-solid fa-code"></i> Coding Assistant
+                </button>
+                <button class="mode-btn" data-mode="fun">
+                    <i class="fa-solid fa-face-laugh-beam"></i> Fun Mode
+                </button>
+                <button class="mode-btn" data-mode="mood">
+                    <i class="fa-solid fa-heart-pulse"></i> Mood Support
+                </button>
+                <button class="mode-btn" data-mode="entertainment">
+                    <i class="fa-solid fa-film"></i> Entertainment
+                </button>
+            </nav>
+
+            <p class="sidebar-label">Chat History</p>
+            <div class="history-list" id="historyList">
+                <p class="history-empty">No saved chats yet</p>
+            </div>
+
+            <button class="settings-btn" id="settingsBtn">
+                <i class="fa-solid fa-gear"></i> Settings
+            </button>
+        </aside>
+
+        <!-- ================= MAIN AREA ================= -->
+        <main class="main">
+
+            <!-- Top bar -->
+            <header class="topbar">
+                <button class="icon-btn menu-btn" id="menuBtn" title="Open menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <div class="topbar-title">
+                    <h2 id="modeTitle">Smart Chat</h2>
+                    <span id="modeSubtitle">Talk about anything with your AI best friend</span>
+                </div>
+                <button class="icon-btn" id="clearChatBtn" title="Clear chat">
+                    <i class="fa-solid fa-trash-can"></i>
+                </button>
+            </header>
+
+            <!-- Welcome screen (hidden after the first message) -->
+            <section class="welcome" id="welcomeScreen">
+                <div class="welcome-icon"><i class="fa-solid fa-heart"></i></div>
+                <h2>Hi, I'm VibeMate!</h2>
+                <p class="tagline">Your mood. Your space. Your AI companion.</p>
+
+                <div class="suggestions" id="suggestions">
+                    <button class="suggestion-card" data-prompt="Explain recursion in simple words with an example">
+                        <i class="fa-solid fa-book-open"></i>
+                        <span>Explain recursion in simple words</span>
+                    </button>
+                    <button class="suggestion-card" data-prompt="Write a Python program to reverse a string and explain it">
+                        <i class="fa-solid fa-code"></i>
+                        <span>Write a Python program to reverse a string</span>
+                    </button>
+                    <button class="suggestion-card" data-prompt="Tell me a funny joke to make my day better">
+                        <i class="fa-solid fa-face-laugh-beam"></i>
+                        <span>Tell me a funny joke</span>
+                    </button>
+                    <button class="suggestion-card" data-prompt="I am feeling stressed about my exams. Can you cheer me up?">
+                        <i class="fa-solid fa-heart-pulse"></i>
+                        <span>I feel stressed about exams</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Chat messages (filled by JavaScript) -->
+            <section class="chat-box hidden" id="chatBox"></section>
+
+            <!-- Input area -->
+            <footer class="input-area">
+                <!-- Preview of the image chosen for upload -->
+                <div class="image-preview hidden" id="imagePreview">
+                    <img id="previewImg" src="" alt="Selected image preview">
+                    <button id="removeImageBtn" title="Remove image">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <div class="input-bar">
+                    <!-- Hidden file picker, opened by the image button -->
+                    <input type="file" id="imageInput" accept="image/*" hidden>
+
+                    <button class="icon-btn" id="imageBtn" title="Upload an image">
+                        <i class="fa-solid fa-image"></i>
+                    </button>
+
+                    <textarea id="userInput" rows="1" placeholder="Type your message here..."></textarea>
+
+                    <button class="icon-btn" id="micBtn" title="Speak your message">
+                        <i class="fa-solid fa-microphone"></i>
+                    </button>
+
+                    <button class="send-btn" id="sendBtn" title="Send message">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </div>
+                <p class="disclaimer">VibeMate can make mistakes. Please double-check important information.</p>
+            </footer>
+        </main>
+    </div>
+
+    <!-- ================= SETTINGS WINDOW ================= -->
+    <div class="modal-overlay hidden" id="settingsModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-gear"></i> Settings</h3>
+                <button class="icon-btn" id="closeSettingsBtn" title="Close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="setting-row">
+                <label for="themeSelect">Theme</label>
+                <select id="themeSelect">
+                    <option value="light">Light Lavender</option>
+                    <option value="dark">Dark Purple</option>
+                </select>
+            </div>
+
+            <div class="setting-row">
+                <label for="fontSizeSelect">Text size</label>
+                <select id="fontSizeSelect">
+                    <option value="small">Small</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="large">Large</option>
+                </select>
+            </div>
+
+            <div class="setting-row">
+                <label for="speakToggle">Read AI replies aloud</label>
+                <input type="checkbox" id="speakToggle">
+            </div>
+
+            <div class="setting-row">
+                <label for="enterToggle">Press Enter to send</label>
+                <input type="checkbox" id="enterToggle" checked>
+            </div>
+        </div>
+    </div>
+
+    <!-- Our own JavaScript file (we write it in Step 8) -->
+    <script src="../static/js/script.js"></script>
+</body>
+</html>

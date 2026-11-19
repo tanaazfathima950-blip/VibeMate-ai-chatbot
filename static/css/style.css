@@ -1,0 +1,881 @@
+/* =========================================================
+   VibeMate 2.0 - style.css
+   Lavender / pink / purple glassmorphism theme
+   ========================================================= */
+
+/* ---------- 1. Colors and basic variables ---------- */
+:root {
+    --bg1: #f3e8ff;
+    --bg2: #fde4f2;
+    --primary: #8b5cf6;
+    --primary-dark: #7c3aed;
+    --pink: #ec4899;
+    --text: #2e1065;
+    --muted: #6b5b8c;
+    --glass: rgba(255, 255, 255, 0.55);
+    --glass-border: rgba(255, 255, 255, 0.75);
+    --bot-bubble: rgba(255, 255, 255, 0.9);
+    --input-bg: rgba(255, 255, 255, 0.85);
+    --shadow: 0 8px 32px rgba(139, 92, 246, 0.18);
+    --gradient: linear-gradient(135deg, #8b5cf6, #ec4899);
+}
+
+/* Dark theme (switched by JavaScript in the Settings window) */
+body[data-theme="dark"] {
+    --bg1: #1a1033;
+    --bg2: #2d1250;
+    --text: #f3e8ff;
+    --muted: #c4b5fd;
+    --glass: rgba(45, 28, 80, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.12);
+    --bot-bubble: rgba(70, 45, 115, 0.85);
+    --input-bg: rgba(45, 28, 80, 0.85);
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* Text size (switched by JavaScript in the Settings window) */
+body[data-font="small"]  { font-size: 14px; }
+body[data-font="medium"] { font-size: 16px; }
+body[data-font="large"]  { font-size: 18px; }
+
+/* ---------- 2. Reset and page background ---------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    color: var(--text);
+    background: linear-gradient(135deg, var(--bg1), var(--bg2));
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Used by JavaScript to show and hide things */
+.hidden {
+    display: none !important;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+}
+
+/* ---------- 3. Glowing background shapes ---------- */
+.bg-shape {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.55;
+    z-index: 0;
+    animation: float 12s ease-in-out infinite;
+}
+.shape-1 { width: 380px; height: 380px; background: #c4b5fd; top: -80px;  left: -80px; }
+.shape-2 { width: 340px; height: 340px; background: #f9a8d4; bottom: -80px; right: 10%; animation-delay: 3s; }
+.shape-3 { width: 260px; height: 260px; background: #a78bfa; top: 40%; right: -60px; animation-delay: 6s; }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50%      { transform: translateY(-30px) scale(1.08); }
+}
+
+/* ---------- 4. Main layout ---------- */
+.app {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    gap: 16px;
+    height: 100vh;
+    padding: 16px;
+}
+
+/* ---------- 5. Sidebar ---------- */
+.sidebar {
+    width: 280px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px 16px;
+    background: var(--glass);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+    overflow-y: auto;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+.logo-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    background: var(--gradient);
+    color: #fff;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 16px rgba(236, 72, 153, 0.35);
+}
+.logo h1 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.logo p {
+    font-size: 0.75rem;
+    color: var(--muted);
+}
+
+.new-chat-btn {
+    padding: 12px;
+    border-radius: 14px;
+    background: var(--gradient);
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 600;
+    box-shadow: 0 6px 16px rgba(139, 92, 246, 0.35);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.new-chat-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 22px rgba(139, 92, 246, 0.45);
+}
+
+.sidebar-label {
+    margin-top: 10px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.mode-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.mode-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    border-radius: 12px;
+    background: transparent;
+    color: var(--text);
+    font-size: 0.9rem;
+    text-align: left;
+    transition: background 0.2s, transform 0.2s;
+}
+.mode-btn i {
+    width: 20px;
+    text-align: center;
+    color: var(--primary);
+}
+.mode-btn:hover {
+    background: rgba(139, 92, 246, 0.14);
+    transform: translateX(4px);
+}
+.mode-btn.active {
+    background: var(--gradient);
+    color: #fff;
+}
+.mode-btn.active i {
+    color: #fff;
+}
+
+/* Chat history list */
+.history-list {
+    flex: 1;
+    min-height: 90px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    overflow-y: auto;
+}
+.history-empty {
+    font-size: 0.85rem;
+    color: var(--muted);
+    padding: 8px 4px;
+}
+.history-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.35);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.history-item:hover {
+    background: rgba(139, 92, 246, 0.2);
+}
+.history-item span {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.history-item button {
+    background: transparent;
+    color: var(--muted);
+    font-size: 0.85rem;
+}
+.history-item button:hover {
+    color: var(--pink);
+}
+
+.settings-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.4);
+    color: var(--text);
+    font-size: 0.9rem;
+    transition: background 0.2s;
+}
+.settings-btn:hover {
+    background: rgba(139, 92, 246, 0.2);
+}
+
+/* ---------- 6. Main area ---------- */
+.main {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    background: var(--glass);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+/* Top bar */
+.topbar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 22px;
+    border-bottom: 1px solid var(--glass-border);
+}
+.topbar-title {
+    flex: 1;
+}
+.topbar-title h2 {
+    font-size: 1.15rem;
+    font-weight: 600;
+}
+.topbar-title span {
+    font-size: 0.8rem;
+    color: var(--muted);
+}
+
+.icon-btn {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    color: var(--primary-dark);
+    font-size: 1rem;
+    transition: background 0.2s, transform 0.2s;
+}
+.icon-btn:hover {
+    background: rgba(139, 92, 246, 0.25);
+    transform: scale(1.08);
+}
+.icon-btn.listening {
+    background: var(--pink);
+    color: #fff;
+    animation: pulse 1.2s infinite;
+}
+.menu-btn {
+    display: none; /* shown only on mobile in Step 11 */
+}
+
+@keyframes pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.6); }
+    70%  { box-shadow: 0 0 0 14px rgba(236, 72, 153, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(236, 72, 153, 0); }
+}
+
+/* ---------- 7. Welcome screen ---------- */
+.welcome {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 24px;
+    text-align: center;
+    overflow-y: auto;
+    animation: fadeUp 0.6s ease;
+}
+.welcome-icon {
+    width: 84px;
+    height: 84px;
+    border-radius: 26px;
+    background: var(--gradient);
+    color: #fff;
+    font-size: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 12px 30px rgba(236, 72, 153, 0.4);
+    animation: float 6s ease-in-out infinite;
+}
+.welcome h2 {
+    font-size: 2rem;
+    font-weight: 700;
+}
+.tagline {
+    color: var(--muted);
+    margin-bottom: 14px;
+}
+
+.suggestions {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    width: 100%;
+    max-width: 640px;
+}
+.suggestion-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px;
+    border-radius: 18px;
+    background: var(--bot-bubble);
+    border: 1px solid var(--glass-border);
+    color: var(--text);
+    font-size: 0.9rem;
+    text-align: left;
+    box-shadow: 0 4px 14px rgba(139, 92, 246, 0.1);
+    transition: transform 0.25s, box-shadow 0.25s;
+}
+.suggestion-card i {
+    font-size: 1.2rem;
+    color: var(--primary);
+}
+.suggestion-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 26px rgba(139, 92, 246, 0.25);
+}
+
+/* ---------- 8. Chat messages ---------- */
+.chat-box {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 22px;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+}
+
+.message {
+    display: flex;
+    gap: 10px;
+    max-width: 78%;
+    animation: fadeUp 0.35s ease;
+}
+.message.user {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+}
+.message.bot {
+    align-self: flex-start;
+}
+
+.avatar {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    color: #fff;
+    background: var(--gradient);
+}
+.message.user .avatar {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+}
+
+.bubble {
+    padding: 12px 16px;
+    border-radius: 18px;
+    line-height: 1.6;
+    font-size: 0.95em;
+    word-wrap: break-word;
+    overflow-wrap: anywhere;
+    box-shadow: 0 4px 14px rgba(139, 92, 246, 0.12);
+}
+.message.user .bubble {
+    background: var(--gradient);
+    color: #fff;
+    border-bottom-right-radius: 4px;
+}
+.message.bot .bubble {
+    background: var(--bot-bubble);
+    border: 1px solid var(--glass-border);
+    border-bottom-left-radius: 4px;
+}
+
+/* Image shown inside a user message */
+.bubble img {
+    display: block;
+    max-width: 240px;
+    max-height: 240px;
+    border-radius: 12px;
+    margin-bottom: 8px;
+}
+
+/* Code shown inside AI replies */
+.bubble pre {
+    margin: 10px 0;
+    padding: 12px;
+    border-radius: 12px;
+    background: #1e1b3a;
+    color: #e9d5ff;
+    font-size: 0.85em;
+    overflow-x: auto;
+}
+.bubble code {
+    font-family: Consolas, "Courier New", monospace;
+}
+.bubble p + p {
+    margin-top: 8px;
+}
+
+/* Typing animation (three bouncing dots) */
+.typing {
+    display: flex;
+    gap: 5px;
+    padding: 4px 0;
+}
+.typing span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--primary);
+    animation: bounce 1.2s infinite;
+}
+.typing span:nth-child(2) { animation-delay: 0.2s; }
+.typing span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes bounce {
+    0%, 60%, 100% { transform: translateY(0);    opacity: 0.5; }
+    30%           { transform: translateY(-7px); opacity: 1; }
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- 9. Input area ---------- */
+.input-area {
+    padding: 14px 22px 16px;
+    border-top: 1px solid var(--glass-border);
+}
+
+.image-preview {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+.image-preview img {
+    height: 80px;
+    border-radius: 12px;
+    border: 2px solid var(--primary);
+}
+.image-preview button {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--pink);
+    color: #fff;
+    font-size: 0.7rem;
+}
+
+.input-bar {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    padding: 8px 10px;
+    background: var(--input-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 26px;
+    box-shadow: 0 4px 16px rgba(139, 92, 246, 0.12);
+}
+.input-bar textarea {
+    flex: 1;
+    max-height: 140px;
+    padding: 10px 6px;
+    border: none;
+    outline: none;
+    resize: none;
+    background: transparent;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 0.95em;
+    line-height: 1.4;
+}
+.input-bar textarea::placeholder {
+    color: var(--muted);
+}
+
+.send-btn {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--gradient);
+    color: #fff;
+    font-size: 1rem;
+    box-shadow: 0 6px 16px rgba(236, 72, 153, 0.4);
+    transition: transform 0.2s;
+}
+.send-btn:hover {
+    transform: scale(1.1) rotate(-8deg);
+}
+.send-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.disclaimer {
+    margin-top: 8px;
+    text-align: center;
+    font-size: 0.72rem;
+    color: var(--muted);
+}
+
+/* ---------- 10. Settings window ---------- */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(46, 16, 101, 0.4);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+.modal {
+    width: 92%;
+    max-width: 420px;
+    padding: 24px;
+    border-radius: 24px;
+    background: var(--bg1);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    animation: fadeUp 0.3s ease;
+}
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+}
+.modal-header h3 {
+    font-size: 1.15rem;
+}
+.modal-header h3 i {
+    color: var(--primary);
+    margin-right: 6px;
+}
+
+.setting-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--glass-border);
+    font-size: 0.92rem;
+}
+.setting-row:last-child {
+    border-bottom: none;
+}
+.setting-row select {
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--primary);
+    background: var(--input-bg);
+    color: var(--text);
+    font-family: inherit;
+    outline: none;
+}
+.setting-row input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--primary);
+    cursor: pointer;
+}
+
+/* ---------- 11. Scrollbar ---------- */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(139, 92, 246, 0.4);
+    border-radius: 10px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* =========================================================
+   12. RESPONSIVE DESIGN (tablet and mobile)
+   ========================================================= */
+
+/* ---------- Tablets and small laptops ---------- */
+@media (max-width: 992px) {
+    .sidebar {
+        width: 240px;
+    }
+    .message {
+        max-width: 88%;
+    }
+}
+
+/* ---------- Phones and narrow windows ---------- */
+@media (max-width: 768px) {
+    /* dvh keeps the layout correct when the phone browser bar hides or shows */
+    body,
+    .app {
+        height: 100dvh;
+    }
+
+    .app {
+        padding: 8px;
+        gap: 0;
+    }
+
+    .main {
+        border-radius: 18px;
+    }
+
+    /* Show the menu (three lines) button */
+    .menu-btn {
+        display: block;
+    }
+
+    /* Sidebar becomes a slide-in panel, hidden on the left by default */
+    .sidebar {
+        position: fixed;
+        top: 8px;
+        left: 8px;
+        bottom: 8px;
+        z-index: 20;
+        width: 280px;
+        max-width: 82%;
+        background: var(--bg1);
+        transform: translateX(-120%);
+        transition: transform 0.3s ease;
+    }
+
+    /* When JavaScript adds the "open" class, slide in and dim the page behind */
+    .sidebar.open {
+        transform: translateX(0);
+        box-shadow: 0 0 0 100vmax rgba(46, 16, 101, 0.45), var(--shadow);
+    }
+
+    .topbar {
+        padding: 12px 14px;
+        gap: 10px;
+    }
+
+    .welcome {
+        padding: 16px;
+        gap: 10px;
+        justify-content: flex-start;
+    }
+    .welcome-icon {
+        width: 66px;
+        height: 66px;
+        font-size: 28px;
+        border-radius: 20px;
+        flex-shrink: 0;
+    }
+    .welcome h2 {
+        font-size: 1.5rem;
+    }
+
+    .chat-box {
+        padding: 14px;
+        gap: 14px;
+    }
+    .message {
+        max-width: 94%;
+    }
+    .bubble img {
+        max-width: 100%;
+    }
+
+    .input-area {
+        padding: 10px 12px 12px;
+    }
+    .disclaimer {
+        font-size: 0.68rem;
+    }
+}
+
+/* ---------- Small phones ---------- */
+@media (max-width: 600px) {
+    .suggestions {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    .suggestion-card {
+        padding: 13px;
+    }
+    .topbar-title span {
+        font-size: 0.72rem;
+    }
+    .icon-btn {
+        width: 38px;
+        height: 38px;
+    }
+    .send-btn {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+
+/* =========================================================
+   13. Keep line breaks and indentation in the user's own
+   messages (important when pasting code)
+   ========================================================= */
+.message.user .bubble > div {
+    white-space: pre-wrap;
+}
+
+
+/* =========================================================
+   14. Chat history: highlight for the chat that is open
+   ========================================================= */
+.history-item.active {
+    background: rgba(139, 92, 246, 0.28);
+    box-shadow: inset 3px 0 0 var(--primary);
+    font-weight: 600;
+}
+.history-item button {
+    opacity: 0.55;
+    transition: opacity 0.2s, color 0.2s;
+}
+.history-item:hover button,
+.history-item.active button {
+    opacity: 1;
+}
+
+
+/* =========================================================
+   15. Loading and error states: error bubble, retry button,
+   toast messages
+   ========================================================= */
+
+/* Failed reply: soft red bubble */
+.message.bot .bubble.error {
+    background: rgba(254, 226, 226, 0.95);
+    border-color: #fca5a5;
+    color: #7f1d1d;
+}
+body[data-theme="dark"] .message.bot .bubble.error {
+    background: rgba(127, 29, 29, 0.45);
+    border-color: #b91c1c;
+    color: #fecaca;
+}
+
+/* "Try again" button inside the error bubble */
+.retry-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    background: var(--gradient);
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.35);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.retry-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(139, 92, 246, 0.45);
+}
+
+/* Toast messages (small popups at the top right) */
+.toast-box {
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: min(360px, calc(100vw - 36px));
+}
+.toast {
+    padding: 12px 16px;
+    border-radius: 14px;
+    background: var(--bg1);
+    color: var(--text);
+    border: 1px solid var(--glass-border);
+    border-left: 4px solid var(--primary);
+    box-shadow: var(--shadow);
+    font-size: 0.9rem;
+    line-height: 1.4;
+    animation: fadeUp 0.3s ease;
+    transition: opacity 0.3s, transform 0.3s;
+}
+.toast.error   { border-left-color: #ef4444; }
+.toast.success { border-left-color: #22c55e; }
+.toast.hide {
+    opacity: 0;
+    transform: translateX(20px);
+}
+
+/* Disabled input buttons while VibeMate is replying */
+.icon-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
